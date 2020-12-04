@@ -40,6 +40,18 @@ private:
    // Private function members:
    //
 
+	void freeMemory()
+	{
+		Node *cur = h;
+		while(cur != NULL)
+		{
+			Node *next = cur->Next;
+			free(cur);
+			cur = next;
+		}
+		h = NULL;
+	}
+
 
 public:   
    //
@@ -115,6 +127,32 @@ public:
    //
    Integer(const Integer& other)
    {
+	   h = NULL;
+	   Node *cur = NULL;
+	   
+	   Node *cur1 = other.h;
+
+	   while(cur1 != NULL)
+	   {
+		   Node *next1 = cur1->Next;
+
+		   Node *d = (Node*)malloc(sizeof(Node));
+		   d->Prev = cur;
+		   d->Next = NULL;		   
+		   d->Value = cur1->Value;
+
+		   if( cur == NULL )
+			   cur = d;
+		   else
+			   cur->Next = d;
+
+		   cur = d;
+
+		   if( h == NULL )
+			   h = d;		   
+
+		   cur1 = next1;
+	   }
    }
 
    //
@@ -130,13 +168,7 @@ public:
    //
    ~Integer()
    {
-	   Node *cur = h;
-	   while(cur != NULL)
-	   {
-		   Node *next = cur->Next;
-		   free(cur);
-		   cur = next;
-	   }
+	   freeMemory();
    }
 
    //
@@ -159,9 +191,37 @@ public:
          return *this;     // do nothing and just return THIS object back
 
 
+	  freeMemory();
       //
       // TODO: free existing integer, then make a deep copy of other
       //
+	  
+	  h = NULL;
+	  Node *cur = NULL;
+
+	  Node *cur1 = other.h;
+
+	  while(cur1 != NULL)
+	  {
+		  Node *next1 = cur1->Next;
+
+		  Node *d = (Node*)malloc(sizeof(Node));
+		  d->Prev = cur;
+		  d->Next = NULL;		   
+		  d->Value = cur1->Value;
+
+		  if( cur == NULL )
+			  cur = d;
+		  else
+			  cur->Next = d;
+
+		  cur = d;
+
+		  if( h == NULL )
+			  h = d;		   
+
+		  cur1 = next1;
+	  }
 
 
       return *this;  // done, return THIS object back
@@ -217,7 +277,25 @@ public:
    //
    string toStr()
    {
-      return "";
+	   Node *cur = h;
+	   string ret = "";
+	   int i = 0;
+	   while(cur != NULL)
+	   {
+			Node *next = cur->Next;
+
+			string d = std::to_string((unsigned long long)cur->Value);
+			if( i % 3 == 0 && i > 2 )
+				ret = d + "," + ret;				
+			else
+				ret = d + ret;
+				
+
+			cur = next;
+			i++;
+	   }
+
+	   return ret;
    }
 
    //
