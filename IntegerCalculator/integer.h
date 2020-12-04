@@ -34,6 +34,7 @@ private:
 	};
 
 	Node *head;
+	Node *tail;
 
 
    //

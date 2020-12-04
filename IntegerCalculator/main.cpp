@@ -80,7 +80,23 @@ int main()
 
 		if( arr[1] == "=" )
 		{
-			d[num - 1] = Integer(arr[2]);
+			if( arr[2][0] == 'i' )
+			{
+				int num1 = atoi(arr[2].c_str() + 1);
+				if( num1 < 0 || num1 > memory_size)
+				{
+					cout << "Invalid Variable, try again..." << endl;
+					continue;
+				}
+
+				d[num - 1] = d[num1 - 1];
+			}
+			else
+			{
+				d[num - 1] = Integer(arr[2]);
+			}
+
+			
 		}
 
 		if( arr[1] == "+=" )
