@@ -1,14 +1,24 @@
 #include <iostream>
 #include <sstream>
 #include "integer.h"
+#include <fstream>
 
 
 using namespace std;
 
 #define MAX_PARAM 10
 
-void processCommand(Integer *d, string arr[MAX_PARAM], int memory_size)
+void processCommand(Integer *d, string arr[], int memory_size);
+void processFile(Integer *d, string filename, int memory_size);
+
+void processCommand(Integer *d, string arr[], int memory_size)
 {
+	if( arr[0] == "l" )
+	{		
+		processFile(d, arr[1], memory_size);
+		return;
+	}
+
 	if( arr[0][0] != 'i' )
 	{
 		cout << "Invalid command, try again" << endl;
@@ -75,6 +85,34 @@ void processCommand(Integer *d, string arr[MAX_PARAM], int memory_size)
 		d[num - 1].shift_right(atoi(arr[2].c_str()));
 
 }
+
+void processFile(Integer *d, string filename, int memory_size)
+{
+	std::ifstream infile(filename);
+	cout << "Load: loading '" << filename << "'" << endl;
+
+	string param;
+	while (std::getline(infile, param))
+	{
+		string arr[MAX_PARAM];
+		int param_count = 0;
+		stringstream ssin(param);
+		while (ssin.good() && param_count < MAX_PARAM)
+		{
+			ssin >> arr[param_count];
+			++param_count;
+		}
+
+		if( param.compare("x") == 0 )
+			break;
+
+		processCommand(d, arr, memory_size);
+	}
+
+	cout << "Load: done '" << filename << "'" << endl;
+}
+
+
 int main()
 {
 	Integer i1; // default constructor => 0
