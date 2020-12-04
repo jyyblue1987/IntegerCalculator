@@ -362,10 +362,13 @@ public:
 		   if( sum > 9 )
 		   {
 			   cur->Value = sum - 10;
-			   remain = 0;
+			   remain = 1;
 		   }
 		   else
-			   remain = 1;
+		   {
+			   cur->Value = sum;
+			   remain = 0;
+		   }			
 
 		   prev = cur;
 
