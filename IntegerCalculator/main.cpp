@@ -6,6 +6,75 @@
 using namespace std;
 
 #define MAX_PARAM 10
+
+void processCommand(Integer *d, string arr[MAX_PARAM], int memory_size)
+{
+	if( arr[0][0] != 'i' )
+	{
+		cout << "Invalid command, try again" << endl;
+		return;
+	}
+
+	int num = atoi(arr[0].c_str() + 1);
+
+	if( num < 1 || num > memory_size )
+	{
+		cout << "Invalid Variable, try again..." << endl;
+		return;
+	}
+
+	if( arr[1] == "?" )
+	{
+		cout << d[num - 1].toStr() << endl;
+	}
+
+	if( arr[1] == "=" )
+	{
+		if( arr[2][0] == 'i' )
+		{
+			int num1 = atoi(arr[2].c_str() + 1);
+			if( num1 < 0 || num1 > memory_size)
+			{
+				cout << "Invalid Variable, try again..." << endl;
+				return;
+			}
+
+			d[num - 1] = d[num1 - 1];
+		}
+		else
+		{
+			d[num - 1] = Integer(arr[2]);
+		}
+
+
+	}
+
+	if( arr[1] == "+=" )
+	{
+		if( arr[2][0] == 'i' )
+		{
+			int num1 = atoi(arr[2].c_str() + 1);
+			if( num1 < 0 || num1 > memory_size)
+			{
+				cout << "Invalid Variable, try again..." << endl;
+				return;
+			}
+
+			d[num - 1].add(d[num1 -1]);
+		}
+		else
+		{
+			d[num - 1].add(Integer(arr[2]));
+		}
+	}
+
+	if( arr[1] == "<<" )
+		d[num - 1].shift_left(atoi(arr[2].c_str()));
+
+	if( arr[1] == ">>" )
+		d[num - 1].shift_right(atoi(arr[2].c_str()));
+
+}
 int main()
 {
 	Integer i1; // default constructor => 0
@@ -59,72 +128,7 @@ int main()
 			continue;
 		}
 
-		if( arr[0][0] != 'i' )
-		{
-			cout << "Invalid command, try again" << endl;
-			continue;
-		}
-
-		int num = atoi(arr[0].c_str() + 1);
-		
-		if( num < 1 || num > memory_size )
-		{
-			cout << "Invalid Variable, try again..." << endl;
-			continue;
-		}
-		
-		if( arr[1] == "?" )
-		{
-			cout << d[num - 1].toStr() << endl;
-		}
-
-		if( arr[1] == "=" )
-		{
-			if( arr[2][0] == 'i' )
-			{
-				int num1 = atoi(arr[2].c_str() + 1);
-				if( num1 < 0 || num1 > memory_size)
-				{
-					cout << "Invalid Variable, try again..." << endl;
-					continue;
-				}
-
-				d[num - 1] = d[num1 - 1];
-			}
-			else
-			{
-				d[num - 1] = Integer(arr[2]);
-			}
-
-			
-		}
-
-		if( arr[1] == "+=" )
-		{
-			if( arr[2][0] == 'i' )
-			{
-				int num1 = atoi(arr[2].c_str() + 1);
-				if( num1 < 0 || num1 > memory_size)
-				{
-					cout << "Invalid Variable, try again..." << endl;
-					continue;
-				}
-
-				d[num - 1].add(d[num1 -1]);
-			}
-			else
-			{
-				d[num - 1].add(Integer(arr[2]));
-			}
-		}
-
-		if( arr[1] == "<<" )
-			d[num - 1].shift_left(atoi(arr[2].c_str()));
-
-		if( arr[1] == ">>" )
-			d[num - 1].shift_right(atoi(arr[2].c_str()));
-
-		continue;
+		processCommand(d, arr, memory_size);
 	}
 
 
