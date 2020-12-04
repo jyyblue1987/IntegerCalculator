@@ -415,6 +415,10 @@ public:
 		   return;
 	   }
 
+	   if( head != NULL && head->Value == 0)
+		   return;
+		   
+
 	   Node *prev = head;
 	   for(int i = 0; i < N; i++)
 	   {

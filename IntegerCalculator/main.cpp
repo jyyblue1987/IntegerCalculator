@@ -142,6 +142,10 @@ int main()
 	i3.shift_right(3);
 	cout << i3.toStr() << endl;
 
+	Integer i4; // constructor => 456
+	i4.shift_left(3);
+	cout << i4.toStr() << endl;
+
 	cout << "Memory Size? ";
 
 	int memory_size = 0;
