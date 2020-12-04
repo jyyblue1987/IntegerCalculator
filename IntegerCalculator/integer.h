@@ -1,4 +1,4 @@
-/*integer.h*/
+/*integer.head*/
 
 //
 // An Integer class for adding and shifting integers of unlimited
@@ -33,7 +33,7 @@ private:
 		Node* Prev;
 	};
 
-	Node *h;
+	Node *head;
 
 
    //
@@ -42,22 +42,22 @@ private:
 
 	void freeMemory()
 	{
-		Node *cur = h;
+		Node *cur = head;
 		while(cur != NULL)
 		{
 			Node *next = cur->Next;
 			free(cur);
 			cur = next;
 		}
-		h = NULL;
+		head = NULL;
 	}
 
 	void initZero()
 	{
-		h = (Node*)malloc(sizeof(Node));
-		h->Prev = NULL;
-		h->Next = NULL;
-		h->Value = 0;
+		head = (Node*)malloc(sizeof(Node));
+		head->Prev = NULL;
+		head->Next = NULL;
+		head->Value = 0;
 	}
 
 
@@ -98,7 +98,7 @@ public:
    //
    Integer(string s)
    {
-	   h = NULL;
+	   head = NULL;
 	   Node *cur = NULL;
 	   for (int i = s.size() - 1; i >= 0; i--) {
 		   Node *d = (Node*)malloc(sizeof(Node));
@@ -115,8 +115,8 @@ public:
 
 		   cur = d;
 
-		   if( h == NULL )
-				h = d;		   
+		   if( head == NULL )
+				head = d;		   
 	   }
    }
 
@@ -134,10 +134,10 @@ public:
    //
    Integer(const Integer& other)
    {
-	   h = NULL;
+	   head = NULL;
 	   Node *cur = NULL;
 	   
-	   Node *cur1 = other.h;
+	   Node *cur1 = other.head;
 
 	   while(cur1 != NULL)
 	   {
@@ -153,8 +153,8 @@ public:
 
 		   cur = d;
 
-		   if( h == NULL )
-			   h = d;		   
+		   if( head == NULL )
+			   head = d;		   
 
 		   cur1 = next1;
 	   }
@@ -201,10 +201,10 @@ public:
       // TODO: free existing integer, then make a deep copy of other
       //
 	  
-	  h = NULL;
+	  head = NULL;
 	  Node *cur = NULL;
 
-	  Node *cur1 = other.h;
+	  Node *cur1 = other.head;
 
 	  while(cur1 != NULL)
 	  {
@@ -220,8 +220,8 @@ public:
 
 		  cur = d;
 
-		  if( h == NULL )
-			  h = d;		   
+		  if( head == NULL )
+			  head = d;		   
 
 		  cur1 = next1;
 	  }
@@ -246,7 +246,7 @@ public:
    //
    string toRawStr()
    {
-	   Node *cur = h;
+	   Node *cur = head;
 	   string ret = "";
 	   while(cur != NULL)
 	   {
@@ -280,7 +280,7 @@ public:
    //
    string toStr()
    {
-	   Node *cur = h;
+	   Node *cur = head;
 	   string ret = "";
 	   int i = 0;
 	   while(cur != NULL)
@@ -314,8 +314,8 @@ public:
    //
    void add(const Integer& other)
    {
-	   Node *cur = h;
-	   Node *cur1 = other.h;
+	   Node *cur = head;
+	   Node *cur1 = other.head;
 
 	   int remain = 0;
 	   int sum = 0;
@@ -414,7 +414,7 @@ public:
 		   return;
 	   }
 
-	   Node *prev = h;
+	   Node *prev = head;
 	   for(int i = 0; i < N; i++)
 	   {
 		   Node *d = (Node*)malloc(sizeof(Node));
@@ -422,7 +422,7 @@ public:
 		   d->Next = prev;		   
 		   d->Value = 0;
 
-		   h = d;
+		   head = d;
 		   prev = d;
 	   }
    }
@@ -458,7 +458,7 @@ public:
 		   return;
 	   }
 
-	   Node *cur = h;
+	   Node *cur = head;
 	   for(int i = 0; i < N; i++)
 	   {
 		   if( cur == NULL )
@@ -468,10 +468,10 @@ public:
 		   free(cur);		   
 
 		   cur = next;
-		   h = cur;
+		   head = cur;
 	   }
 
-	   if( h == NULL )
+	   if( head == NULL )
 		   initZero();
    }
 
