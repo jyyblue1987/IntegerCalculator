@@ -101,9 +101,7 @@ public:
 		   d->Next = NULL;		   
 		   d->Value = s[i] - '0';
 
-		   if( cur == NULL )
-			   cur = d;
-		   else
+		   if( cur != NULL )			   
 			   cur->Next = d;
 
 		   cur = d;
@@ -141,9 +139,7 @@ public:
 		   d->Next = NULL;		   
 		   d->Value = cur1->Value;
 
-		   if( cur == NULL )
-			   cur = d;
-		   else
+		   if( cur != NULL )			   
 			   cur->Next = d;
 
 		   cur = d;
@@ -210,9 +206,7 @@ public:
 		  d->Next = NULL;		   
 		  d->Value = cur1->Value;
 
-		  if( cur == NULL )
-			  cur = d;
-		  else
+		  if( cur != NULL )			   
 			  cur->Next = d;
 
 		  cur = d;
@@ -311,6 +305,72 @@ public:
    //
    void add(const Integer& other)
    {
+	   Node *cur = h;
+	   Node *cur1 = other.h;
+
+	   int remain = 0;
+	   int sum = 0;
+
+	   Node *prev = NULL;
+	   while(cur1 != NULL)
+	   {   			
+			if( cur == NULL ) // not created
+			{
+				Node *d = (Node*)malloc(sizeof(Node));
+				d->Prev = cur;
+				d->Next = NULL;		   
+				d->Value = 0;
+
+				prev->Next = d;
+
+				cur = d;
+			}
+
+			sum = cur->Value + cur1->Value + remain;
+			if( sum > 9 )
+			{
+				cur->Value = sum - 10;
+				remain = 1;
+			}
+			else
+			{
+				cur->Value = sum;
+				remain = 0;
+			}
+
+			prev = cur;
+		   
+			cur = cur->Next;	   
+			cur1 = cur1->Next;
+	   }
+
+	   while( remain > 0 )
+	   {
+		   if( cur == NULL ) // not created
+		   {
+			   Node *d = (Node*)malloc(sizeof(Node));
+			   d->Prev = cur;
+			   d->Next = NULL;		   
+			   d->Value = 0;
+
+			   prev->Next = d;
+
+			   cur = d;
+		   }
+
+		   sum = cur->Value + remain;
+		   if( sum > 9 )
+		   {
+			   cur->Value = sum - 10;
+			   remain = 0;
+		   }
+		   else
+			   remain = 1;
+
+		   prev = cur;
+
+		   cur = cur->Next;	   
+	   }
    }
 
    //

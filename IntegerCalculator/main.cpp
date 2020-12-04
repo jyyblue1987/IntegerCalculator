@@ -4,7 +4,7 @@ using namespace std;
 int main()
 {
 	Integer i1; // default constructor => 0
-	Integer i2("123456"); // constructor => 123
+	Integer i2("123"); // constructor => 123
 	Integer i3("456"); // constructor => 456
 
 	i1.add(i2); // i1 += i2;
