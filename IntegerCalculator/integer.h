@@ -52,6 +52,14 @@ private:
 		h = NULL;
 	}
 
+	void initZero()
+	{
+		h = (Node*)malloc(sizeof(Node));
+		h->Prev = NULL;
+		h->Next = NULL;
+		h->Value = 0;
+	}
+
 
 public:   
    //
@@ -67,10 +75,7 @@ public:
    //
    Integer()
    {
-	   h = (Node*)malloc(sizeof(Node));
-	   h->Prev = NULL;
-	   h->Next = NULL;
-	   h->Value = 0;
+	   initZero();
    }
 
    //
@@ -100,6 +105,10 @@ public:
 		   d->Prev = cur;
 		   d->Next = NULL;		   
 		   d->Value = s[i] - '0';
+		   if( d->Value < 0 || d->Value > 9 )
+			   throw invalid_argument("invalid_argument");
+		   if( d->Value == 0  && i == 0 )
+			   throw invalid_argument("invalid_argument");
 
 		   if( cur != NULL )			   
 			   cur->Next = d;
@@ -395,6 +404,27 @@ public:
    //
    void shift_left(int N)
    {
+	   if( N < 0 )
+		   throw invalid_argument("invalid_argument N should be greater than 0");
+
+	   if( N == 0 )
+	   {
+		   freeMemory();
+		   initZero();
+		   return;
+	   }
+
+	   Node *prev = h;
+	   for(int i = 0; i < N; i++)
+	   {
+		   Node *d = (Node*)malloc(sizeof(Node));
+		   d->Prev = NULL;
+		   d->Next = prev;		   
+		   d->Value = 0;
+
+		   h = d;
+		   prev = d;
+	   }
    }
 
    //
@@ -418,6 +448,31 @@ public:
    //
    void shift_right(int N)
    {
+	   if( N < 0 )
+		   throw invalid_argument("invalid_argument N should be greater than 0");
+
+	   if( N == 0 )
+	   {
+		   freeMemory();
+		   initZero();
+		   return;
+	   }
+
+	   Node *cur = h;
+	   for(int i = 0; i < N; i++)
+	   {
+		   if( cur == NULL )
+			   break;
+
+		   Node *next = cur->Next;		   
+		   free(cur);		   
+
+		   cur = next;
+		   h = cur;
+	   }
+
+	   if( h == NULL )
+		   initZero();
    }
 
 };
