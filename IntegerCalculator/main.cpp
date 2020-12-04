@@ -89,11 +89,20 @@ void processCommand(Integer *d, string arr[], int memory_size)
 void processFile(Integer *d, string filename, int memory_size)
 {
 	std::ifstream infile(filename);
+	
+	if( infile.is_open() == false )
+	{
+		cout << "File does not exist, try again..." << endl;
+		return;
+	}
+
 	cout << "Load: loading '" << filename << "'" << endl;
 
 	string param;
+	int count = 0;
 	while (std::getline(infile, param))
 	{
+		count++;
 		string arr[MAX_PARAM];
 		int param_count = 0;
 		stringstream ssin(param);
@@ -108,6 +117,8 @@ void processFile(Integer *d, string filename, int memory_size)
 
 		processCommand(d, arr, memory_size);
 	}
+
+	
 
 	cout << "Load: done '" << filename << "'" << endl;
 }
